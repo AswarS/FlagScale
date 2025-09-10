@@ -99,11 +99,11 @@ def loss_func(loss_mask: torch.Tensor, output_tensor: torch.Tensor, model: Optio
     if has_nvidia_modelopt and modelopt_args_enabled(args):  # [ModelOpt]
         return loss_func_modelopt(loss_mask, output_tensor, model=model)
 
-    # 将output_tensor展成一维，便于后续元素乘法计算
+    # Reshape output tensor to 1D for element-wise multiplication.
     losses = output_tensor.view(-1).float()
-    # 同理将loss_mask展成一维
+    # Reshape loss_mask to 1D as well.
     loss_mask = loss_mask.view(-1).float()
-    # 计算总loss（考虑到DP，不同rank上token数量不一致，先计算sum最后再求mean）
+    # Calculate total loss. (Sum losses and average later to handle varying token counts across DP ranks).
     loss = torch.sum(losses * loss_mask)
 
     # Check individual rank losses are not NaN prior to DP all-reduce.
