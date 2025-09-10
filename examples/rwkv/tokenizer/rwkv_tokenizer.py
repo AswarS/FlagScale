@@ -56,7 +56,7 @@ class TRIE_TOKENIZER():
             lines = f.readlines()
         for line in lines:
             idx = int(line[:line.index(' ')])
-            x = eval(line[line.index(' '):line.rindex(' ')])
+            x = ast.literal_eval(line[line.index(' '):line.rindex(' ')])
             x = x.encode("utf-8") if isinstance(x, str) else x
             assert isinstance(x, bytes)
             assert len(x) == int(line[line.rindex(' '):])
