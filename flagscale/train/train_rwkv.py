@@ -40,7 +40,7 @@ except ImportError:
 
 stimer = StragglerDetector()
 
-def model_provider(pre_process=True, post_process=True, vp_stage=None) -> RWKVModel:
+def model_provider(pre_process=True, post_process=True) -> RWKVModel:
     """Builds the model.
 
     Args:
