@@ -162,6 +162,11 @@ def forward_step(data_iterator, model: RWKVModel, return_schedule_plan: bool = F
         tokens, labels, loss_mask, attention_mask, position_ids = get_batch(data_iterator)
     timers('batch-generator').stop()
 
+    # Safety check for pipeline parallel intermediate stages
+    if tokens is None:
+        # For intermediate pipeline stages, just return None placeholders
+        return None, None
+
     with stimer:
         if args.use_legacy_models:
             output_tensor = model(tokens, labels=labels)

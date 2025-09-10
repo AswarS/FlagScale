@@ -37,15 +37,21 @@ class TRIE:
         u: TRIE = self
         ch: int = key[idx]
 
-        while (u.to[ch] is not None):
+        # 初始化 ret 为 None，表示没有匹配
+        ret = None
+
+        while u.to[ch] is not None:
             u = u.to[ch]
             idx += 1
-            if (u.values):
+            if u.values:
+                # 更新 ret 为当前最长匹配
                 ret = idx, u, u.values
-            if (idx == len(key)):
+            if idx == len(key):
                 break
             ch = key[idx]
+
         return ret
+
 
 
 class TRIE_TOKENIZER():
@@ -91,7 +97,7 @@ class TRIE_TOKENIZER():
     def decode(self, tokens):
         try:
             return self.decodeBytes(tokens).decode('utf-8')
-        except BaseException:
+        except UnicodeDecodeError:
             return '\ufffd'  # bad utf-8
 
     def printTokens(self, tokens):
