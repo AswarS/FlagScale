@@ -185,7 +185,7 @@ class RWKV_Tmix_x070(nn.Module):
                 for i in range(shape[0]):
                     nn.init.orthogonal_(x[i], gain=gain * scale)
             else:
-                assert False
+                raise ValueError("ortho_init only supports 2D and 3D tensors")
             return x
 
         www = torch.zeros(C)
