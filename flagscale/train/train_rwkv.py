@@ -86,7 +86,7 @@ def loss_func(loss_mask: torch.Tensor, output_tensor: torch.Tensor, model: Optio
     Args:
         loss_mask (torch.Tensor): Used to mask out some portions of the loss
         output_tensor (torch.Tensor): The tensor with the losses
-        model (GPTModel, optional): The model (can be wrapped)
+        model (RWKVModel, optional): The model (can be wrapped)
 
     Returns:
         the loss scalar for this micro-batch
