@@ -110,21 +110,7 @@ if "x070" in _RWKV_MY_TESTING:
         def forward(ctx, w, q, k, v, z, b):
             B, T, H, C = w.shape
             assert T % CHUNK_LEN == 0
-            assert all(i.dtype == torch.bfloat16 for i in [w, q, k, v, z, b])
-            assert all(i.is_contiguous() for i in [w, q, k, v, z, b])
-            y = torch.empty_like(v)
-            s = torch.empty(
-                B, H, T // CHUNK_LEN, C, C, dtype=torch.float32, device=w.device
-            )
-            sa = torch.empty(B, T, H, C, dtype=torch.float32, device=w.device)
-            torch.ops.wind_backstepping.forward(w, q, k, v, z, b, y, s, sa)
-            ctx.save_for_backward(w, q, k, v, z, b, s, sa)
-            return y
-
-        @staticmethod
-        def backward(ctx, dy):
-            assert all(i.dtype == torch.bfloat16 for i in [dy])
-            assert all(i.is_contiguous() for i in [dy])
+            assert all(i.dtype in [torch.bfloat16, torch.float16] for i in [w, q, k, v, z, b])
             w, q, k, v, z, b, s, sa = ctx.saved_tensors
             dw, dq, dk, dv, dz, db = [torch.empty_like(x) for x in [
                 w, q, k, v, z, b]]
