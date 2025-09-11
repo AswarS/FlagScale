@@ -51,7 +51,7 @@ def model_provider(pre_process=True, post_process=True) -> RWKVModel:
     Returns:
         RWKVModel: The returned model
     """
-    
+
     args = get_args()
     print_rank_0("Building RWKV model ...")
     return RWKVModel(
@@ -207,9 +207,9 @@ def train_valid_test_datasets_provider(train_val_test_num_samples):
     print_rank_0("> building train, validation, and test datasets for RWKV ...")
 
     train_ds, valid_ds, test_ds = BlendedMegatronDatasetBuilder(
-        dataset_type, 
-        train_val_test_num_samples, 
-        is_dataset_built_on_rank, 
+        dataset_type,
+        train_val_test_num_samples,
+        is_dataset_built_on_rank,
         config
     ).build()
 

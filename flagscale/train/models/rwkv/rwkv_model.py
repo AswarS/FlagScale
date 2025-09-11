@@ -375,11 +375,11 @@ class RWKVModel(nn.Module):
         self.post_process = post_process
         self.parallel_output = parallel_output
         self.use_grad_checkpoint = use_grad_checkpoint
-        
+
         self.config = TransformerConfig(
             num_layers=n_layer,
             hidden_size=hidden_size,
-            num_attention_heads=1,   
+            num_attention_heads=1,
             use_cpu_initialization=True,
             bf16=True,
             fp16=False
@@ -474,5 +474,3 @@ class _ArgsShim:
         # provide a default for any other attributes used in Blocks
         # add here as needed (e.g., attention dims)
         # self.some_other_field = default_value
-
-
